@@ -17,8 +17,8 @@
         <script type="importmap">
             {
                 "imports": {
-                    "three": "../build/three.module.js",
-                    "three/addons/": "./jsm/"
+                    "three": "https://unpkg.com/three@0.155.0/build/three.module.js",
+                    "three/addons/": "https://unpkg.com/three@0.155.0/examples/jsm/"
                 }
             }
         </script>
@@ -90,15 +90,14 @@
                 scene.add( dirLight );
 
                 // ground
-                // *** CÓDIGO CORREGIDO PARA QUE EL PISO NO SE VEA AFECTADO POR LA NIEBLA ***
+                // PISO CORREGIDO: MeshBasicMaterial para IGNORAR la niebla de color
                 const mesh = new THREE.Mesh( 
                     new THREE.PlaneGeometry( 2000, 2000 ), 
                     new THREE.MeshBasicMaterial( { 
-                        color: 0xc8c8c8, // Color gris claro
+                        color: 0xc8c8c8, 
                         depthWrite: false 
                     } ) 
                 );
-                // *************************************************************************
                 mesh.rotation.x = - Math.PI / 2;
                 mesh.receiveShadow = true;
                 scene.add( mesh );
@@ -225,13 +224,15 @@
 
                         if ( child.isMesh ) {
 
-                            // --- MODIFICACIÓN DE MATERIAL: RESTAURAR Y APLICAR PBR AL ORIGINAL ---
+                            // --- MATERIAL: RESTAURAR Y APLICAR PBR AL ORIGINAL ---
                             if (child.material) {
                                 child.material = new THREE.MeshStandardMaterial().copy(child.material);
+                                
+                                // Ajustes finos de PBR 
                                 child.material.roughness = 0.6; 
                                 child.material.metalness = 0.1;
                             }
-                            // ---------------------------------------------------------------------
+                            // -----------------------------------------------------
 
                             child.castShadow = true;
                             child.receiveShadow = true;
