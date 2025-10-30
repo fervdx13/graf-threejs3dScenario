@@ -173,7 +173,9 @@
 
             function loadAsset( asset ) {
 
-                loader.load( 'models/fbx/' + asset + '.fbx', function ( group ) {
+                // *** RUTA FBX CORREGIDA: Se añade 'collada/' para que funcione con tu estructura de GitHub ***
+                loader.load( 'models/collada/fbx/' + asset + '.fbx', function ( group ) {
+                // *****************************************************************************************
 
                     if ( object ) {
 
